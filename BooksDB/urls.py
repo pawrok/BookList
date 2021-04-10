@@ -24,5 +24,5 @@ urlpatterns = [
     url(r"^$", HomePageView.as_view(), name='home'),
     url("home", HomePageView.as_view(), name='home'),
     url(r"add", BookCreateView.as_view(), name='add'),
-    url(r"add/(?P<pk>\d+)/$", BookUpdateView.as_view(), name='update'),
+    url(r"update/(?P<pk>\d+)/$", BookUpdateView.as_view(), name='update'),
 ]

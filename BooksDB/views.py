@@ -26,6 +26,7 @@ class BookCreateView(CreateView):
     template_name = 'book_form.html'
     model = Book
     form_class = BookForm
+    success_url = '/home/'
 
 
 class BookUpdateView(UpdateView):
@@ -33,5 +34,5 @@ class BookUpdateView(UpdateView):
     form_class = BookForm
     template_name = 'book_form.html'
 
-    def get_success_url(self):
-        return reverse_lazy('item-detail', kwargs={'pk': 1})
+    # def get_success_url(self):
+    #     return reverse_lazy('item-detail', kwargs={'pk': 1})
