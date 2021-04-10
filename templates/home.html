@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="container">
+            <div class="row">
+                <div class="col-md-auto">
+                    <h1 class="mt-2">Book List</h1>
+                </div>
+                <div class="col-6 d-flex ">
+                    <form class="form-inline my-2 my-lg-0" action="{% url 'home' %}" method="get">
+                      <input class="form-control mr-sm-2" name="q" type="text" placeholder="Search...">
+                    </form>
+                </div>
+            </div>
+
+            <table class="table table-sm">
+              <thead>
+                <tr>
+{#                    {% for var in object_list %}#}
+                      <th scope="col">Title</th>
+                      <th scope="col">Author</th>
+                      <th scope="col">Publication</th>
+                      <th scope="col">ISBN</th>
+                      <th scope="col">Pages</th>
+                      <th scope="col">Cover</th>
+                      <th scope="col">Language</th>
+{#                    {% endfor %}#}
+                </tr>
+              </thead>
+              <tbody>
+                    {% for book in object_list %}
+                    <tr>
+                        <td>{{ book.title }}</td>
+                        <td>{{ book.author }}</td>
+                        <td>{{ book.publication_date }}</td>
+                        <td>{{ book.ISBN }}</td>
+                        <td>{{ book.page_count }}</td>
+                        <td>{{ book.cover_src }}</td>
+                        <td>{{ book.language }}</td>
+                    </tr>
+
+                  {% endfor %}
+              </tbody>
+            </table>
+    </div>
+{% endblock %}
+
