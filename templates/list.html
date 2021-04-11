@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<table class="table">
+  <thead>
+    <tr>
+{#                    {% for var in object_list %}#}
+          <th scope="col">Title</th>
+          <th scope="col">Authors</th>
+{#          <th scope="col">Publication</th>#}
+{#          <th scope="col">ISBN</th>#}
+{#          <th scope="col">Pages</th>#}
+{#          <th scope="col">Cover</th>#}
+{#          <th scope="col">Language</th>#}
+{#          <th scope="col"></th>#}
+{#                    {% endfor %}#}
+    </tr>
+  </thead>
+  <tbody>
+        {% for book in books.items %}
+        <tr>
+            <td>{{ book.volumeInfo.title }}</td>
+            <td>{{ book.volumeInfo.authors }}</td>
+{#            <td>{{ book.publication_date }}</td>#}
+{#            <td>{{ book.ISBN }}</td>#}
+{#            <td>{{ book.page_count }}</td>#}
+{#            <td>{{ book.cover_src }}</td>#}
+{#            <td>{{ book.language }}</td>#}
+{#            <td><a href="{% url 'update' book.id %}"><button type="button" class="btn btn-primary btn-sm">Edit</button></a></td>#}
+        </tr>
+
+      {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

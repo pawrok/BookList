@@ -18,11 +18,13 @@ from django.urls import path
 from django.conf.urls import url
 
 
-from BooksDB.views import HomePageView, BookUpdateView, BookCreateView
+from BooksDB.views import HomePageView, BookUpdateView, BookCreateView, BookImportView, ListImportView
 
 urlpatterns = [
     url(r"^$", HomePageView.as_view(), name='home'),
     url("home", HomePageView.as_view(), name='home'),
     url(r"add", BookCreateView.as_view(), name='add'),
     url(r"update/(?P<pk>\d+)/$", BookUpdateView.as_view(), name='update'),
+    url("import", BookImportView.as_view(), name='import'),
+    url("list", ListImportView.as_view(), name='list'),
 ]

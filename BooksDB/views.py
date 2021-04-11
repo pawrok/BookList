@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
-from .forms import BookForm
+from .forms import BookForm, ImportForm
 from django.views.generic import FormView
 from django.views.generic.base import TemplateView
-from django.views.generic import CreateView, UpdateView, ListView
+from django.views.generic import CreateView, UpdateView, ListView, View
 from .models import Book
 from django.db.models import Q
 from django.urls import reverse_lazy
+import requests
 
 
 class HomePageView(ListView):
@@ -33,6 +34,24 @@ class BookUpdateView(UpdateView):
     model = Book
     form_class = BookForm
     template_name = 'book_form.html'
+    success_url = '/home/'
 
-    # def get_success_url(self):
-    #     return reverse_lazy('item-detail', kwargs={'pk': 1})
+
+class BookImportView(FormView):
+    template_name = 'import.html'
+    form_class = ImportForm
+    # def get_queryset(self):
+    #     print(self.request)
+    #     # FormView.get_queryset()
+
+
+class ListImportView(ListView):
+    def get(self, request, *args, **kwargs):
+        title = request.GET['title']
+        author = request.GET['author']
+        query = f"intitle:{title}+inauthor:{author}"
+        params = {"q": query}
+        books = requests.get('https://www.googleapis.com/books/v1/volumes', params=params)
+        books = books.json()
+        context = {'books': books}
+        return render(request, "list.html", context=context)
