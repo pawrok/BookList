@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import dj_database_url
 from pathlib import Path
 import os
 
@@ -84,10 +84,10 @@ DATABASES = {
 
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': '1wwj4l',
-        'HOST': 'localhost',
+        'NAME': 'de6bfsol6tp9tk',
+        'USER': 'qvlshbtulfyopv',
+        'PASSWORD': 'c37b3bd91eb4df5a1817ee4be5decd1aa001b3c15317f3dd82e6d70f4bac9d14',
+        'HOST': 'ec2-54-220-53-223.eu-west-1.compute.amazonaws.com',
         'PORT': '5432',
     }
 
