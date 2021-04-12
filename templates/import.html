@@ -4,9 +4,9 @@
 
 {% block content %}
     <h1>Import Book</h1>
-    <form action='/list' method="get">
+{#    <form action='/list' method="get">#}
         {% csrf_token %}
         {% crispy form %}
-        <button type="submit" class="btn btn-primary" >Import</button>
-    </form>
+{#        <button type="submit" class="btn btn-primary" >Import</button>#}
+{#    </form>#}
 {% endblock %}
