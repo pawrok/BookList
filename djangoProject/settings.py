@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'BooksDB',
     'crispy_forms',
     'rest_framework',
+    'coverage',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

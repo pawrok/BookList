@@ -5,5 +5,5 @@ from .views import (
 )
 
 urlpatterns = [
-    path('', BookViewSet.as_view()),
+    path('', BookViewSet.as_view(), name='api')
 ]

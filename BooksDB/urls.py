@@ -25,6 +25,6 @@ urlpatterns = [
     url(r"update/(?P<pk>\d+)/$", BookUpdateView.as_view(), name='update'),
     url("import", BookImportView.as_view(), name='import'),
     url("list", ListImportView.as_view(), name='list'),
-    url("info", InfoView.as_view(), name='list'),
+    url("info", InfoView.as_view(), name='info'),
     path('api/', include('BooksDB.api.urls')),
 ]

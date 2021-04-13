@@ -4,11 +4,12 @@ from rest_framework import permissions
 from BooksDB.models import Book
 from rest_framework.generics import ListAPIView
 import re
+from rest_framework.decorators import api_view
 
 
 class BookViewSet(ListAPIView):
     """
-    API endpoint that allows books to be viewed or edited.
+    API endpoint that allows books to be viewed.
     """
     queryset = Book.objects.all()
     serializer_class = BookSerializer
