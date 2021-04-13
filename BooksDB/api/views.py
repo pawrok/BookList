@@ -1,11 +1,9 @@
-from rest_framework import viewsets
+from django.db.models import Q
 from .serializers import BookSerializer
 from rest_framework import permissions
 from BooksDB.models import Book
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
 from rest_framework.generics import ListAPIView
+import re
 
 
 class BookViewSet(ListAPIView):
@@ -19,34 +17,21 @@ class BookViewSet(ListAPIView):
     permission_classes = (permissions.AllowAny,)
     http_method_names = ['get']
 
-
-    # def get(self, request, *args, **kwargs):
-    #     """
-    #     List all the todo items for given requested user
-    #     """
-    #     books = Book.objects.all()
-    #     serializer = BookSerializer(books, many=True)
-    #     return Response(serializer.data, status=status.HTTP_200_OK)
-
     def get_queryset(self):
         queryset = Book.objects.all()
-        author = self.request.query_params.get('author', None)
-        if author is not None:
-            queryset = queryset.filter(author=author)
-        return queryset
+        query = self.request.META['QUERY_STRING']
 
-    # def post(self, request, *args, **kwargs):
-    #     '''
-    #     Create the Todo with given todo data
-    #     '''
-    #     data = {
-    #         'task': request.data.get('task'),
-    #         'completed': request.data.get('completed'),
-    #         'user': request.user.id
-    #     }
-    #     serializer = BookSerializer(data=data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    #
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        if not query:
+            query = ""
+
+        title_q = re.search(r"(?<=intitle:)\w+", query)
+        title_q = title_q.group(0) if title_q else ''
+
+        author_q = re.search(r"(?<=inauthor:)\w+", query)
+        author_q = author_q.group(0) if author_q else ''
+
+        queryset = queryset.filter(
+            Q(title__icontains=title_q) & Q(author__icontains=author_q)
+            )
+
+        return queryset

@@ -1,14 +1,9 @@
-from django.shortcuts import render
-from django.shortcuts import HttpResponse
+from django.shortcuts import redirect
 from .forms import BookForm, ImportForm
-from django.views.generic import FormView
-from django.views.generic.base import TemplateView
-from django.views.generic import CreateView, UpdateView, ListView, View
+from django.views.generic import CreateView, UpdateView, ListView, View, FormView, TemplateView
 from .models import Book
 from django.db.models import Q
-from django.urls import reverse_lazy
 import requests
-
 
 
 class HomePageView(ListView):
@@ -41,28 +36,46 @@ class BookUpdateView(UpdateView):
 class BookImportView(FormView):
     template_name = 'import.html'
     form_class = ImportForm
-    # def get_queryset(self):
-    #     print(self.request)
-    #     # FormView.get_queryset()
 
 
 class ListImportView(View):
-    books = None
-
     def get(self, request, *args, **kwargs):
         title = request.GET['title']
         author = request.GET['author']
-        query = f"intitle:{title}+inauthor:{author}"
+        isbn = request.GET['isbn']
+        query = f"intitle:{title}+inauthor:{author}+isbn:{isbn}"
         params = {"q": query}
-        self.books = requests.get('https://www.googleapis.com/books/v1/volumes', params=params)
-        self.books = self.books.json()
-        context = {'books': self.books}
-        return render(request, "list.html", context=context)
+        books = requests.get('https://www.googleapis.com/books/v1/volumes', params=params)
+        books_json = books.json()
+        book_fields = self.get_fields_from_json(books_json)
 
-    def post(self, request, *args, **kwargs):
-        index = request.POST.get('index')
-        unpack_data = self.books[index]
-        book = Book(*unpack_data)
-        # if book.is_valid():
-        #     book.save()
-            # return Response(serializer.data, status=status.HTTP_201_CREATED)
+        if book_fields:
+            new_book = Book.objects.create(**book_fields)
+            new_book.full_clean()
+            new_book.save()
+            return redirect("home.html")
+        else:
+            return redirect("import.html")
+
+    def get_fields_from_json(self, json):
+        if json.get('items'):
+            first_book = json['items'][0]
+        else:
+            return ""
+
+        title = first_book['volumeInfo']['title']
+        author = ', '.join(first_book['volumeInfo']['authors'])
+        publication_date = first_book['volumeInfo']['publishedDate']
+        isbn = list(filter(lambda book: book['type'] == 'ISBN_13', first_book['volumeInfo']['industryIdentifiers']))
+        isbn = int(isbn[0].get('identifier')) or 0
+        page_count = first_book['volumeInfo'].get('pageCount') or 0
+        cover_src = first_book['volumeInfo'].get('imageLinks', {}).get('thumbnail') or ''
+        language = first_book['volumeInfo'].get('language') or ''
+
+        return {'title': title, 'author': author, 'publication_date': publication_date, 'ISBN': isbn,
+                'page_count': page_count, 'cover_src': cover_src, 'language': language}
+
+
+class InfoView(TemplateView):
+    template_name = 'info.html'
+

@@ -13,12 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url
-from BooksDB.views import HomePageView, BookUpdateView, BookCreateView, BookImportView, ListImportView
-
-
+from BooksDB.views import HomePageView, BookUpdateView, BookCreateView, BookImportView, ListImportView, InfoView
 
 
 urlpatterns = [
@@ -28,5 +25,6 @@ urlpatterns = [
     url(r"update/(?P<pk>\d+)/$", BookUpdateView.as_view(), name='update'),
     url("import", BookImportView.as_view(), name='import'),
     url("list", ListImportView.as_view(), name='list'),
+    url("info", InfoView.as_view(), name='list'),
     path('api/', include('BooksDB.api.urls')),
 ]

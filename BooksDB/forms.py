@@ -2,7 +2,7 @@ from django import forms
 from .models import Book
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit, Row, Column
+from crispy_forms.layout import Submit
 
 
 class BookForm(forms.ModelForm):
@@ -28,7 +28,7 @@ class ImportForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(ImportForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'import book'))
+        self.helper.add_input(Submit('submit', 'Import'))
         self.helper.form_method = 'get'
         self.helper.form_action = '/list'
 

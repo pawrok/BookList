@@ -1,3 +1,11 @@
+{# This file is obolete. Need to find a way to pass data from this view to add it to db. #}
+
+{#        # Tried to make list of api searches and then add option to select one#}
+{#        # but it was too complicated, probably need cache for that?#}
+{#        ##}
+{#        # context = {'books': self.books}#}
+{#        # return render(request, "list.html", context=context)#}
+
 {% extends 'base.html' %}
 {% block content %}
 
@@ -17,13 +25,8 @@
             <td>{{ book.volumeInfo.title }}</td>
             <td>{{ book.volumeInfo.authors }}</td>
             <td>{{ book.volumeInfo.publishedDate }}</td>
-{#            <td>{{ book.ISBN }}</td>#}
-{#            <td>{{ book.page_count }}</td>#}
-{#            <td>{{ book.cover_src }}</td>#}
             <td>{{ book.volumeInfo.language }}</td>
-{#            <td><a href="{% url 'update' book.id %}"><button type="button" class="btn btn-primary btn-sm">Edit</button></a></td>#}
         </tr>
-
       {% endfor %}
   </tbody>
 </table>
@@ -31,6 +34,7 @@
     {% csrf_token %}
     <input type="hidden" name="index" value="1" />
     <input type="submit" class="btn btn-primary" value="post"/>
-
 </form>
 {% endblock %}
+
+

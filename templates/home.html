@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-6 d-flex ">
                     <form class="form-inline my-2 my-lg-0" action="{% url 'home' %}" method="get">
-                      <input class="form-control mr-sm-2" name="q" type="text" placeholder="Search...">
+                      <input class="form-control mr-sm-2" name="q" type="text" placeholder="Search..."/>
                     </form>
                 </div>
             </div>
@@ -17,7 +17,6 @@
             <table class="table table-sm">
               <thead>
                 <tr>
-{#                    {% for var in object_list %}#}
                       <th scope="col">Title</th>
                       <th scope="col">Author</th>
                       <th scope="col">Publication</th>
@@ -26,7 +25,6 @@
                       <th scope="col">Cover</th>
                       <th scope="col">Language</th>
                       <th scope="col"></th>
-{#                    {% endfor %}#}
                 </tr>
               </thead>
               <tbody>
@@ -41,7 +39,6 @@
                         <td>{{ book.language }}</td>
                         <td><a href="{% url 'update' book.id %}"><button type="button" class="btn btn-primary btn-sm">Edit</button></a></td>
                     </tr>
-
                   {% endfor %}
               </tbody>
             </table>
