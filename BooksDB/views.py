@@ -42,8 +42,7 @@ class ListImportView(View):
     def get(self, request, *args, **kwargs):
         title = request.GET['title']
         author = request.GET['author']
-        isbn = request.GET['isbn']
-        query = f"intitle:{title}+inauthor:{author}+isbn:{isbn}"
+        query = f"intitle:{title}+inauthor:{author}"
         params = {"q": query}
         books = requests.get('https://www.googleapis.com/books/v1/volumes', params=params)
         books_json = books.json()
