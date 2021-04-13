@@ -10,6 +10,7 @@ from django.urls import reverse_lazy
 import requests
 
 
+
 class HomePageView(ListView):
     model = Book
     template_name = 'home.html'
@@ -45,13 +46,23 @@ class BookImportView(FormView):
     #     # FormView.get_queryset()
 
 
-class ListImportView(ListView):
+class ListImportView(View):
+    books = None
+
     def get(self, request, *args, **kwargs):
         title = request.GET['title']
         author = request.GET['author']
         query = f"intitle:{title}+inauthor:{author}"
         params = {"q": query}
-        books = requests.get('https://www.googleapis.com/books/v1/volumes', params=params)
-        books = books.json()
-        context = {'books': books}
+        self.books = requests.get('https://www.googleapis.com/books/v1/volumes', params=params)
+        self.books = self.books.json()
+        context = {'books': self.books}
         return render(request, "list.html", context=context)
+
+    def post(self, request, *args, **kwargs):
+        index = request.POST.get('index')
+        unpack_data = self.books[index]
+        book = Book(*unpack_data)
+        # if book.is_valid():
+        #     book.save()
+            # return Response(serializer.data, status=status.HTTP_201_CREATED)

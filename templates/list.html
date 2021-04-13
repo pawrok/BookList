@@ -4,16 +4,11 @@
 <table class="table">
   <thead>
     <tr>
-{#                    {% for var in object_list %}#}
-          <th scope="col">Title</th>
-          <th scope="col">Authors</th>
-          <th scope="col">Published</th>
-{#          <th scope="col">ISBN</th>#}
-{#          <th scope="col">Pages</th>#}
-{#          <th scope="col">Cover</th>#}
-          <th scope="col">Language</th>
-{#          <th scope="col"></th>#}
-{#                    {% endfor %}#}
+      <th scope="col"></th>
+      <th scope="col">Title</th>
+      <th scope="col">Authors</th>
+      <th scope="col">Published</th>
+      <th scope="col">Language</th>
     </tr>
   </thead>
   <tbody>
@@ -32,4 +27,10 @@
       {% endfor %}
   </tbody>
 </table>
+<form action="" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="index" value="1" />
+    <input type="submit" class="btn btn-primary" value="post"/>
+
+</form>
 {% endblock %}

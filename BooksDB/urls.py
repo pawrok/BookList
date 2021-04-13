@@ -14,11 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf.urls import url
-
-
 from BooksDB.views import HomePageView, BookUpdateView, BookCreateView, BookImportView, ListImportView
+
+
+
 
 urlpatterns = [
     url(r"^$", HomePageView.as_view(), name='home'),
@@ -27,4 +28,5 @@ urlpatterns = [
     url(r"update/(?P<pk>\d+)/$", BookUpdateView.as_view(), name='update'),
     url("import", BookImportView.as_view(), name='import'),
     url("list", ListImportView.as_view(), name='list'),
+    path('api/', include('BooksDB.api.urls')),
 ]

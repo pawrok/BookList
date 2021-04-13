@@ -30,6 +30,7 @@ class ImportForm(forms.Form):
         self.helper = FormHelper()
         self.helper.add_input(Submit('submit', 'import book'))
         self.helper.form_method = 'get'
+        self.helper.form_action = '/list'
 
     class Meta:
         fields = ('title', 'author')

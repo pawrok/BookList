@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'BooksDB',
     'crispy_forms',
+    'rest_framework',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -83,12 +84,19 @@ WSGI_APPLICATION = 'djangoProject.wsgi.application'
 DATABASES = {
 
     'default': {
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': 'de6bfsol6tp9tk',
+        # 'USER': 'qvlshbtulfyopv',
+        # 'PASSWORD': 'c37b3bd91eb4df5a1817ee4be5decd1aa001b3c15317f3dd82e6d70f4bac9d14',
+        # 'HOST': 'ec2-54-220-53-223.eu-west-1.compute.amazonaws.com',
+        # 'PORT': '5432',
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'de6bfsol6tp9tk',
-        'USER': 'qvlshbtulfyopv',
-        'PASSWORD': 'c37b3bd91eb4df5a1817ee4be5decd1aa001b3c15317f3dd82e6d70f4bac9d14',
-        'HOST': 'ec2-54-220-53-223.eu-west-1.compute.amazonaws.com',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': '1wwj4l',
+        'HOST': 'localhost',
         'PORT': '5432',
+
     }
 
 }
@@ -137,3 +145,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
