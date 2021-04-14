@@ -15,17 +15,16 @@ Including another URLconf
 """
 from django.urls import path, include
 from django.conf.urls import url
-from BooksDB.views import HomePageView, BookUpdateView, BookCreateView, BookImportView, ListImportView, InfoView, BookDeleteView
-
+from BooksDB import views
 
 urlpatterns = [
-    url(r"^$", HomePageView.as_view(), name='home'),
-    url("home", HomePageView.as_view(), name='home'),
-    url(r"add", BookCreateView.as_view(), name='add'),
-    url(r"update/(?P<pk>\d+)/$", BookUpdateView.as_view(), name='update'),
-    url(r"delete/(?P<pk>\d+)/$", BookDeleteView.as_view(), name='delete'),
-    url("import", BookImportView.as_view(), name='import'),
-    url("list", ListImportView.as_view(), name='list'),
-    url("info", InfoView.as_view(), name='info'),
+    url(r"^$", views.HomePageView.as_view(), name='home'),
+    url("home", views.HomePageView.as_view(), name='home'),
+    url(r"add", views.BookCreateView.as_view(), name='add'),
+    url(r"update/(?P<pk>\d+)/$", views.BookUpdateView.as_view(), name='update'),
+    url(r"delete/(?P<pk>\d+)/$", views.BookDeleteView.as_view(), name='delete'),
+    url("import", views.BookImportView.as_view(), name='import'),
+    url("list", views.ListImportView.as_view(), name='list'),
+    url("info", views.InfoView.as_view(), name='info'),
     path('api/', include('BooksDB.api.urls')),
 ]
