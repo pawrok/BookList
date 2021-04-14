@@ -1,8 +1,6 @@
-from django.test import TestCase, Client, RequestFactory
-import unittest
+from django.test import TestCase, Client
 from .models import Book
 from django.urls import reverse
-from .views import ListImportView
 from .api.serializers import BookSerializer
 from rest_framework import status
 from json import dumps, loads

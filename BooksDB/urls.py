@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.urls import path, include
 from django.conf.urls import url
-from BooksDB.views import HomePageView, BookUpdateView, BookCreateView, BookImportView, ListImportView, InfoView
+from BooksDB.views import HomePageView, BookUpdateView, BookCreateView, BookImportView, ListImportView, InfoView, BookDeleteView
 
 
 urlpatterns = [
@@ -23,6 +23,7 @@ urlpatterns = [
     url("home", HomePageView.as_view(), name='home'),
     url(r"add", BookCreateView.as_view(), name='add'),
     url(r"update/(?P<pk>\d+)/$", BookUpdateView.as_view(), name='update'),
+    url(r"delete/(?P<pk>\d+)/$", BookDeleteView.as_view(), name='delete'),
     url("import", BookImportView.as_view(), name='import'),
     url("list", ListImportView.as_view(), name='list'),
     url("info", InfoView.as_view(), name='info'),

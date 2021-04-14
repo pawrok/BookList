@@ -1,6 +1,6 @@
 from django.shortcuts import redirect
 from .forms import BookForm, ImportForm
-from django.views.generic import CreateView, UpdateView, ListView, View, FormView, TemplateView
+from django.views.generic import CreateView, UpdateView, ListView, View, FormView, TemplateView, DeleteView
 from .models import Book
 from django.db.models import Q
 import requests
@@ -64,9 +64,9 @@ class ListImportView(View):
 
         title = first_book['volumeInfo']['title']
         author = ', '.join(first_book['volumeInfo']['authors'])
-        publication_date = first_book['volumeInfo']['publishedDate']
+        publication_date = first_book['volumeInfo'].get('publishedDate') or ''
         isbn = list(filter(lambda book: book['type'] == 'ISBN_13', first_book['volumeInfo']['industryIdentifiers']))
-        isbn = int(isbn[0].get('identifier')) or 0
+        isbn = int(isbn[0].get('identifier')) if isbn else 0
         page_count = first_book['volumeInfo'].get('pageCount') or 0
         cover_src = first_book['volumeInfo'].get('imageLinks', {}).get('thumbnail') or ''
         language = first_book['volumeInfo'].get('language') or ''
@@ -78,3 +78,8 @@ class ListImportView(View):
 class InfoView(TemplateView):
     template_name = 'info.html'
 
+
+class BookDeleteView(DeleteView):
+    model = Book
+    success_url = '/home'
+    template_name = 'book_confirm_delete.html'
